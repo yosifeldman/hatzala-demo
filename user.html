@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset='utf-8' />
+    <title>Store Locator</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+    <!-- Geocoder plugin -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.0.1/mapbox-gl-geocoder.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.0.1/mapbox-gl-geocoder.css' type='text/css' />
+
+    <!-- Turf.js plugin -->
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="map_style.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="./index.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./Location.html">Locating volunteers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./Tracking.html">Tracking volunteers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./Manage.html">Manage search map</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="./user.html">User map</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class='sidebar'>
+    <div class='heading'>
+        <h1>User Messages</h1>
+    </div>
+    <!--<div id='listings' class='listings'></div>-->
+    <div id='message' class='message'>
+        <h4>Send Message</h4>
+        <form id="myForm" onsubmit="return noSubmit(event)">
+            <p>
+                <label for="type">Type:</label><br>
+                <select id="type" name="type" onchange="onSelect(this)">
+                    <option>Choose..</option>
+                    <option value="1">The person found</option>
+                    <option value="2">Arrived</option>
+                    <option value="3">Battery Low</option>
+                    <option value="4">Need water</option>
+                    <option value="5">Custom</option>
+                </select>
+            </p>
+            <p class="hide" id="custom_input">
+                <label for="custom">Your text:</label><br>
+                <input type="text" id="custom" name="custom" placeholder="Enter your text..">
+            </p>
+            <p>
+                <button name="send" onclick="sendForm(event)">Send</button>
+            </p>
+        </form>
+    </div>
+    <div id='log' class='log'>
+        <h4>Messages</h4>
+        <ul id="log_messages">
+            <li class='msg new'>
+                <span class='name'>Moishe</span><span class='date'>12:05:45</span><br>
+                <p>בסדר, שולח אמבולנס. בסדר, שולח אמבולנס. בסדר, שולח אמבולנס.</p>
+            </li>
+            <li class="msg">
+                <span class="name">Aharon</span>
+                <span class="date">12:05:40</span>
+                <p>מצאתי אותו בהכרה מלאה, פצוע קל מאוד. מצאתי אותו בהכרה מלאה, פצוע קל מאוד. מצאתי אותו בהכרה מלאה, פצוע קל מאוד.</p>
+            </li>
+            <li class="msg">
+                <span class="name">Aharon</span>
+                <span class="date">12:05:10</span>
+                <p>מצאתי אותו בהכרה מלאה, פצוע קל מאוד. מצאתי אותו בהכרה מלאה, פצוע קל מאוד. מצאתי אותו בהכרה מלאה, פצוע קל מאוד.</p>
+            </li>
+            <li class="msg">
+                <span class="name">David</span>
+                <span class="date">12:05:00</span>
+                <p>מצאתי אותו בהכרה מלאה, פצוע קל מאוד. מצאתי אותו בהכרה מלאה, פצוע קל מאוד. מצאתי אותו בהכרה מלאה, פצוע קל מאוד.</p>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id='map' class='map'></div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src='map_script.js'></script>
+
+</body>
+</html>
