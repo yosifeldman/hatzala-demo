@@ -18,7 +18,8 @@ var stores = {
         "country": "United States",
         "crossStreet": "at 15th St NW",
         "postalCode": "20005",
-        "state": "D.C."
+        "state": "D.C.",
+          "name":"Moishe"
       }
     },
     {
@@ -38,7 +39,8 @@ var stores = {
         "country": "United States",
         "crossStreet": "at 22nd St NW",
         "postalCode": "20037",
-        "state": "D.C."
+        "state": "D.C.",
+          "name":"Avi"
       }
     },
     {
@@ -58,7 +60,8 @@ var stores = {
         "country": "United States",
         "crossStreet": "at Dupont Circle",
         "postalCode": "20036",
-        "state": "D.C."
+        "state": "D.C.",
+          "name":"Dave"
       }
     },
     {
@@ -78,7 +81,8 @@ var stores = {
         "country": "United States",
         "crossStreet": "at 34th St NW",
         "postalCode": "20007",
-        "state": "D.C."
+        "state": "D.C.",
+          "name":"Menahem"
       }
     },
     {
@@ -98,7 +102,8 @@ var stores = {
         "country": "United States",
         "crossStreet": "btwn 2nd & 3rd Sts. SE",
         "postalCode": "20003",
-        "state": "D.C."
+        "state": "D.C.",
+          "name":"Haim"
       }
     },
     {
@@ -115,7 +120,8 @@ var stores = {
         "city": "College Park",
         "country": "United States",
         "postalCode": "20740",
-        "state": "MD"
+        "state": "MD",
+          "name":"Leo"
       }
     },
     {
@@ -135,7 +141,8 @@ var stores = {
         "city": "Bethesda",
         "country": "United States",
         "postalCode": "20814",
-        "state": "MD"
+        "state": "MD",
+          "name":"Eli"
       }
     },
     {
@@ -155,7 +162,8 @@ var stores = {
         "country": "United States",
         "crossStreet": "btw Explorer & Library",
         "postalCode": "20190",
-        "state": "VA"
+        "state": "VA",
+        "name":"John"
       }
     },
     {
@@ -175,7 +183,8 @@ var stores = {
         "country": "United States",
         "crossStreet": "at N Randolph St.",
         "postalCode": "22203",
-        "state": "VA"
+        "state": "VA",
+          "name":"Jason"
       }
     },
     {
@@ -194,7 +203,8 @@ var stores = {
         "city": "Ardmore",
         "country": "United States",
         "postalCode": "19003",
-        "state": "PA"
+        "state": "PA",
+          "name":"Moishe"
       }
     },
     {
@@ -213,7 +223,8 @@ var stores = {
         "city": "Philadelphia",
         "country": "United States",
         "postalCode": "19104",
-        "state": "PA"
+        "state": "PA",
+          "name":"Moishe"
       }
     },
     {
@@ -233,7 +244,8 @@ var stores = {
         "country": "United States",
         "crossStreet": "at 19th St",
         "postalCode": "20036",
-        "state": "D.C."
+        "state": "D.C.",
+          "name":"Moishe"
       }
     },
 	{
@@ -253,7 +265,8 @@ var stores = {
         "country": "United States",
         "crossStreet": "at 19th St",
         "postalCode": "20036",
-        "state": "D.C."
+        "state": "D.C.",
+          "name":"Moishe"
       }
     },
 	{
@@ -273,7 +286,8 @@ var stores = {
         "country": "United States",
         "crossStreet": "at 19th St",
         "postalCode": "20036",
-        "state": "D.C."
+        "state": "D.C.",
+          "name":"Yehuda"
       }
     }	
   ]
@@ -554,7 +568,7 @@ function createPopUp(currentFeature) {
 
   var popup = new mapboxgl.Popup({ closeOnClick: false })
     .setLngLat(currentFeature.geometry.coordinates)
-    .setHTML('<h3>Sweetgreen</h3>' +
+    .setHTML('<h3>'+currentFeature.properties.name+'</h3>' +
       '<h4>' + currentFeature.properties.address + '</h4>')
     .addTo(map);
 }
